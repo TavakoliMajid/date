@@ -13,7 +13,7 @@ def send_to_telegram(message):
     except:
         pass
 
-st.set_page_config(page_title="قرار ما", layout="centered")
+st.set_page_config(page_title="عایا دعوتت همچنان پا برجاست؟", layout="centered")
 
 st.markdown("""
 <style>
