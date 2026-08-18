@@ -1,6 +1,19 @@
 import streamlit as st
+import requests
 
-st.set_page_config(page_title="عایا پیشنهاد دعوت پابرجاست؟", layout="centered")
+# تنظیمات تلگرام (توکن و چت آیدی خود را اینجا وارد کنید)
+TELEGRAM_TOKEN = "8684668902:AAEB89rzQBfi133AkEGM_87jBMtbHfIcfI4"
+CHAT_ID = "98904984"
+
+def send_to_telegram(message):
+    try:
+        url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+        data = {"chat_id": CHAT_ID, "text": message}
+        requests.post(url, data=data)
+    except:
+        pass
+
+st.set_page_config(page_title="قرار ما", layout="centered")
 
 st.markdown("""
 <style>
@@ -27,18 +40,20 @@ st.markdown("""
 if 'step' not in st.session_state: 
     st.session_state.step = 1
 
-def save_response(q, ans):
-    with open("responses.txt", "a", encoding="utf-8") as f:
-        f.write(f"{q}: {ans}\n")
+# ذخیره موقت پاسخ‌ها در طول مراحل
+if 'answers' not in st.session_state:
+    st.session_state.answers = {}
 
 # سوال اول
 if st.session_state.step == 1:
     st.markdown("## عایا همچنان دعوت پا برجاست؟")
     if st.button("بله"):
-        save_response("دعوت", "بله")
+        st.session_state.answers["دعوت"] = "بله"
         st.session_state.step = 2
         st.rerun()
     if st.button("خیر"):
+        st.session_state.answers["دعوت"] = "خیر"
+        send_to_telegram("کاربر به سوال اول پاسخ داد: خیر (تعارف!)")
         st.error("دیدی گفتم داری تعارف می‌کنی!")
 
 # سوال دوم (دکمه فراری فیلم)
@@ -69,8 +84,8 @@ elif st.session_state.step == 2:
     """
     components.html(html_code, height=180)
     
-    if st.button("بله، حتماً!"):
-        save_response("فیلم", "بله")
+    if st.button("بله، حتماً! ❤️"):
+        st.session_state.answers["فیلم"] = "بله"
         st.session_state.step = 3
         st.rerun()
 
@@ -80,21 +95,28 @@ elif st.session_state.step == 3:
     col1, col2 = st.columns(2)
     with col1:
         if st.button("بله "):
-            save_response("فر", "بله")
+            st.session_state.answers["فر"] = "بله"
             st.session_state.step = 4
             st.rerun()
     with col2:
         if st.button("خیر "):
-            save_response("فر", "خیر")
+            st.session_state.answers["فر"] = "خیر"
             st.session_state.step = 4
             st.rerun()
 
 # سوال چهارم (ساعت)
 elif st.session_state.step == 4:
     st.markdown("## چه ساعتی؟")
-    time = st.time_input("ساعت:")
+    time_val = st.time_input("ساعت:")
     if st.button("ثبت نهایی"):
-        save_response("ساعت", str(time))
+        st.session_state.answers["ساعت"] = str(time_val)
+        
+        # ارسال تمام پاسخ‌ها به تلگرام شما
+        final_text = "🎉 پاسخ‌های جدید دریافت شد:\n\n"
+        for q, a in st.session_state.answers.items():
+            final_text += f"- {q}: {a}\n"
+        send_to_telegram(final_text)
+        
         st.session_state.step = 5
         st.rerun()
 
