@@ -84,7 +84,7 @@ elif st.session_state.step == 2:
     """
     components.html(html_code, height=180)
     
-    if st.button("بله، حتماً! ❤️"):
+    if st.button("بله، حتماً!"):
         st.session_state.answers["فیلم"] = "بله"
         st.session_state.step = 3
         st.rerun()
@@ -122,4 +122,4 @@ elif st.session_state.step == 4:
 
 # صفحه آخر
 elif st.session_state.step == 5:
-    st.markdown("<h1 style='margin-top: 50px;'>مرسی از اینکه جواب دادی ❤️</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='margin-top: 50px;'>🫰🏻مرسی از اینکه جواب دادی </h1>", unsafe_allow_html=True)
