@@ -50,8 +50,8 @@ def send_telegram(message):
 MUSIC_FOLDER = "assets/music"
 
 MUSIC_OPTIONS = {
-    "pop1": {"label": "آهنگ شماره ۱ 🎵", "file": "Arman-Garshasbi-Bavar-128.mp3"},
-    "pop2": {"label": "آهنگ شماره ۲ 🎵", "file": "Arman-Garshasbi-Royaye-Man-128.mp3"},
+    "pop1": {"label": "آهنگ شماره ۲ 🎵", "file": "Mammrez - Yare Chish Ghashang.mp3"},
+    "pop2": {"label": "آهنگ شماره ۱ 🎵", "file": "Arman-Garshasbi-Royaye-Man-128.mp3"},
     "pop3": {"label": "آهنگ شماره ۳ 🎵", "file": "Baroon.mp3"},
     "pop4": {"label": "آهنگ شماره ۴ 🎵", "file": "Roozbeh-Bemani-Payane-Khob-128.mp3"},
     "pop5": {"label": "آهنگ شماره ۵ 🎵", "file": "Siavash-Ghomayshi-Panjereh-128.mp3"},
